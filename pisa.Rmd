@@ -1,0 +1,79 @@
+---
+layout: page
+title: "대학 미래가 궁금하다."
+subtitle: "OECD 국제 학업성취도 비교 연구(PISA)"
+author:
+- name: "이광춘"
+  affiliation: "[Tidyverse Korea](https://www.facebook.com/groups/tidyverse/)"
+date: "`r Sys.Date()`"
+tags: ["여론조사", "제20대", "대통령 선거", "후진국", "중진국", "선진국", "선거일정", "경선"]
+output:
+  html_document: 
+    include:
+      after_body: footer.html
+      before_body: header.html
+    toc: yes
+    toc_depth: 2
+    toc_float: true
+    highlight: tango
+    code_folding: hide
+    number_section: true
+    self_contained: true
+bibliography: bibliography_presid.bib
+csl: biomed-central.csl
+urlcolor: blue
+linkcolor: blue
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE,
+                      comment="", digits = 3, tidy = FALSE, prompt = FALSE, fig.align = 'center')
+library(tidyverse)
+library(rvest)
+library(lubridate)
+```
+
+# PISA 란? [^moe-pisa] {#what-is-pisa}
+
+[^moe-pisa]: [교육부, "OECD 국제 학업성취도 비교 연구(PISA 2018) 결과 발표"](https://www.moe.go.kr/boardCnts/view.do?boardID=294&boardSeq=79191&lev=0&searchType=null&statusYN=W&page=1&s=moe&m=020402&opType=N)
+
+PISA(Programme for International Student Assessment)는 지식을 상황과 목적에 맞게 활용할 수 있는 기본적인 '소양(literacy)'을 평가함. 특히, 참여국 만 15세 학생들의 읽기, 수학, 과학, 글로벌 역량에 대한 인지적 영역의 평가와 성취에 영향을 미치는 학생, 학부모, 학교 관련 교육 배경 변인에 대한 설문 조사를 함께 실시함. PISA는 3년을 주기로 평가 실시, 주영역 중심의 평가한다.
+
+- PISA 2000(읽기), PISA 2003(수학), PISA 2006(과학), 
+- PISA 2009(읽기), PISA 2012(수학), PISA 2015(과학), 
+- PISA 2018(읽기), PISA 2021(수학)
+
+# 학생(`student`) {#pisa-student}
+
+```{r pisa-student}
+# install.packages("learningtower")
+library(tidyverse)
+library(learningtower)
+
+data(student_subset_2018)
+
+student <- load_student(year = "2018")
+
+student %>% 
+  filter(country == "KOR") %>% 
+  reactable::reactable()
+
+```
+
+
+# 학교(`school`) {#pisa-school}
+
+```{r pisa-school}
+data("school")
+
+school %>% 
+  filter(country == "KOR") %>% 
+  reactable::reactable()
+
+```
+
+
+
+
